@@ -2,10 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const URL = require("./database.js");
+const userRouter = require("./Routes/User-Routes");
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use("/users", userRouter);
 
 mongoose
 	.connect(URL)
