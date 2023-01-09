@@ -1,3 +1,3 @@
-const URL = "mongodb+srv://FatmaHocine:<password>@fullstack.k8wwicv.mongodb.net/?retryWrites=true&w=majority";
+const URL = "mongodb+srv://maroua:maroua@fullstack.k8wwicv.mongodb.net/fullstack-db?retryWrites=true&w=majority";
 
 module.exports = URL;
