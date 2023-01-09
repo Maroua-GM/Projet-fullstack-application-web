@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../Moduls/User");
+const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
 exports.signup = async (req, res, next) => {
@@ -37,5 +38,37 @@ exports.signup = async (req, res, next) => {
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ message: "erreur lors de la creation de compte " });
+	}
+};
+exports.login = async (req, res, next) => {
+	const { email, password } = req.body;
+	let user, token;
+	let isValid = false;
+	try {
+		//expres validateur
+		const errorsObj = validationResult(req);
+		if (!errorsObj.isEmpty()) {
+			const errorsClient = errorsObj.errors.map((error) => {
+				return { message: error.msg, field: error.param };
+			});
+
+			return res.status(422).json({ errors: errorsClient });
+		}
+		/**verifier si le compte existe bien dans la base de donnees */
+		user = await User.findOne({ email });
+		if (!user) {
+			return res.status(404).json({ message: "compte non trouvé" });
+		}
+		/**verifier si le bon mot de passe */
+		isValid = await bcrypt.compare(password, user.password);
+		if (!isValid) {
+			return res.status(401).json({ message: "mot de passe erroné" });
+		}
+		/**creer le token */
+		token = jwt.sign({ userId: user.id, email: user.email }, "le_secret_de_wiskas", { expiresIn: "3h" });
+		return res.status(200).json({ message: "Vous etes connecté", token });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: error });
 	}
 };
