@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const annanceSchema = new mongoose.Schema({
+const annonceSchema = new mongoose.Schema({
 	nom: { type: String, required: true },
 	prix: { type: String, required: true },
 	description: { type: String },
@@ -9,6 +9,6 @@ const annanceSchema = new mongoose.Schema({
 	user: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
 });
 
-const Annance = mongoose.model("Annance", annanceSchema);
+const Annonce = mongoose.model("Annance", annonceSchema);
 
-module.exports = Annance;
+module.exports = Annonce;
