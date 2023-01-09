@@ -2,21 +2,22 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const URL = require("./database.js");
-const userRouter = require("./Routes/User-Routes");
 
 const app = express();
 
 app.use(bodyParser.json());
 
-app.use("/users", userRouter);
-
 mongoose
 	.connect(URL)
 	.then(() => {
 		console.log("connexion à la base établie");
-		app.listen(5000, () => console.log("Serveur écoute sur le port 5000"));
 	})
 	.catch((error) => {
 		console.log(error);
 		console.log("connexion à la base de données a échoué");
 	});
+
+app.use("/api/user", require("./Routes/User-Routes"));
+
+const PORT = 5000;
+app.listen(PORT, () => console.log("Serveur écoute sur le port 5000"));
