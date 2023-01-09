@@ -1,18 +1,19 @@
 {
-  "name": "projet-fullstack-application-web",
-  "version": "1.0.0",
-  "description": "une site e-commerce",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "benkhedir maroua",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.20.1",
-    "express": "^4.18.2",
-    "express-validator": "^6.14.2",
-    "mongoose": "^6.8.3",
-    "nodemon": "^2.0.20"
-  }
+	"name": "projet-fullstack-application-web",
+	"version": "1.0.0",
+	"description": "une site e-commerce",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon index.js"
+	},
+	"author": "benkhedir maroua",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.20.1",
+		"express": "^4.18.2",
+		"express-validator": "^6.14.2",
+		"mongoose": "^6.8.3",
+		"nodemon": "^2.0.20"
+	}
 }
