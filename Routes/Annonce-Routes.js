@@ -1,11 +1,10 @@
 const AnnonceContronller = require("../Controllers/Annonce-Controller");
 const { check } = require("express-validator");
 const express = require("express");
-const { application } = require("express");
+
 const { auth } = require("../Middlwares/auth");
 const router = express.Router();
 
-application.use(auth);
-router.post("/add", AnnonceContronller.createAnnonce);
-
+router.post("/add", auth, AnnonceContronller.createAnnonce);
+router.get("/annonces", AnnonceContronller.getAnnonces);
 module.exports = router;

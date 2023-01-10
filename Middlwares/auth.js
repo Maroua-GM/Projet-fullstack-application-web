@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 exports.auth = (req, res, next) => {
 	let token;
-
 	try {
 		/**recuperer le jeton de headers */
 		token = req.headers.authorization.split(" ")[1];
@@ -11,9 +10,11 @@ exports.auth = (req, res, next) => {
 		}
 		/**verifier le jeton envoyé par le client avec la clé secret  */
 		const decodedToken = jwt.verify(token, "le_secret_de_wiskas");
+
 		req.userData = { id: decodedToken.userId, email: decodedToken.email };
 		next();
 	} catch (error) {
+		console.log(error);
 		return res.status(422).json({ error });
 	}
 };

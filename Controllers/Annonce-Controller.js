@@ -21,7 +21,9 @@ exports.createAnnonce = async (req, res, next) => {
 			return res.status(422).json({ errors: errorsClient });
 		}
 		/**creer une instance Annonce */
-		const annonce = new Annonce({ nom, prix, description, qteDipso, categorie, user: req.userData.id });
+
+		const annonce = new Annonce({ nom: nom, prix: prix, description: description, qteDispo: qteDispo, categorie: categorie, user: req.userData.id });
+		console.log(annonce);
 		/**verifier si l'utilisateur existe bien dans la base de donnees */
 		user = await User.findById(req.userData.id);
 		if (!user) {
@@ -33,6 +35,20 @@ exports.createAnnonce = async (req, res, next) => {
 		result = await annonce.save({ session });
 		//faire un commit
 		await session.commitTransaction();
-		return res.status(201).json({ message: "Annonce crée", result: annonce });
-	} catch (error) {}
+		return res.status(201).json({ message: "Annonce crée", result: result });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ error: error });
+	}
+};
+exports.getAnnonces = async (req, res, next) => {
+	try {
+		const annonces = await Annonce.find();
+		if (annonces.length !== 0) {
+			return res.status(200).json({ annonces });
+		}
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error });
+	}
 };
