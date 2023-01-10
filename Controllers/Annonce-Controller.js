@@ -114,12 +114,8 @@ exports.deleteAnnonce = async (req, res) => {
 /** GET avoir la liste les annonces d'un seule utilisateur*/
 exports.getAnnonceUser = async (req, res) => {
 	const iduser = req.userData.id;
-	let user;
 	let annonces;
 	try {
-		/**verifier si l'utilisateur existe bien dans la base de donnees */
-		user = await User.findById(req.userData.id);
-
 		annonces = await Annonce.find({ user: iduser });
 		res.status(200).json({ annonces });
 	} catch (error) {
