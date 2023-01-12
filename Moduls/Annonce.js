@@ -6,6 +6,7 @@ const annonceSchema = new mongoose.Schema({
 	description: { type: String },
 	qteDispo: { type: Number, required: true },
 	categorie: { type: String, required: true },
+	image_url: { type: String },
 	user: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
 });
 

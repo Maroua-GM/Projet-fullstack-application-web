@@ -7,7 +7,7 @@ const User = require("../Moduls/User");
 /**POST creer une annonce */
 exports.createAnnonce = async (req, res) => {
 	/**recuperer les informations d'une annonce */
-	const { nom, prix, description, qteDispo, categorie } = req.body;
+	const { nom, prix, description, qteDispo, categorie, image_url } = req.body;
 	let user,
 		result = null;
 	try {
@@ -27,7 +27,7 @@ exports.createAnnonce = async (req, res) => {
 			return res.status(404).json({ message: "utilisateur n'existe pas" });
 		}
 
-		result = await Annonce.create({ nom, prix, description, qteDispo, categorie, user: req.userData.id });
+		result = await Annonce.create({ nom, prix, description, qteDispo, categorie, image_url, user: req.userData.id });
 
 		return res.status(201).json({ message: "Annonce crée", result: result });
 	} catch (error) {
@@ -60,7 +60,7 @@ exports.getAnnonce = async (req, res) => {
 /**PUT modifier une annonce */
 exports.updateAnnonce = async (req, res) => {
 	/**recuperer les informations d'une nouvelle annonce */
-	const { nom, prix, description, qteDispo, categorie } = req.body;
+	const { nom, prix, description, qteDispo, categorie, image_url } = req.body;
 	let user;
 	try {
 		//expres validateur
@@ -81,6 +81,7 @@ exports.updateAnnonce = async (req, res) => {
 			annonce.description = description;
 			annonce.qteDispo = qteDispo;
 			annonce.categorie = categorie;
+			annonce.image_url = image_url;
 			await annonce.save();
 			return res.status(200).json({ message: "l'annonce a été mit à jour avec succès", annonce });
 		} else {

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 exports.auth = (req, res, next) => {
@@ -9,7 +10,7 @@ exports.auth = (req, res, next) => {
 			res.status(422).json("authentification a échoué");
 		}
 		/**verifier le jeton envoyé par le client avec la clé secret  */
-		const decodedToken = jwt.verify(token, "le_secret_de_wiskas");
+		const decodedToken = jwt.verify(token, process.env.PRIVATE_KEY);
 
 		req.userData = { id: decodedToken.userId, email: decodedToken.email };
 		next();

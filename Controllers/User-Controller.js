@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../Moduls/User");
 const bcrypt = require("bcryptjs");
@@ -31,7 +32,7 @@ exports.signup = async (req, res, next) => {
 		user = await User.create(req.body);
 
 		/**la creation de jeton */
-		token = jwt.sign({ userId: user.id, email: email }, "le_secret_de_wiskas");
+		token = jwt.sign({ userId: user.id, email: email }, process.env.PRIVATE_KEY);
 
 		/**envoyer une reponse */
 		return res.status(200).json({ message: "compte crée", token });
@@ -65,7 +66,7 @@ exports.login = async (req, res, next) => {
 			return res.status(401).json({ message: "mot de passe erroné" });
 		}
 		/**creer le token */
-		token = jwt.sign({ userId: user.id, email: user.email }, "le_secret_de_wiskas", { expiresIn: "3h" });
+		token = jwt.sign({ userId: user.id, email: user.email }, process.env.PRIVATE_KEY, { expiresIn: "3h" });
 		return res.status(200).json({ message: "Vous etes connecté", token });
 	} catch (error) {
 		console.log(error);
